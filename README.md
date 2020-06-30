@@ -1,1 +1,1 @@
-# computational_chemistry
+# Computational Chemistry
