@@ -56,3 +56,30 @@ def get_bond_lengths(bonds):
         print("l(%s-%s) = %0.3f Å" % (bonds[x][0], bonds[x][2], bl))
         bond_lengths.append([bonds[x][0], bonds[x][2], bl])
     return bond_lengths
+
+
+def get_angle(x, y, z):
+    """ Gives angle of x-y-z bond. """
+    for i in range(len(bonds)):
+        for j in [0, 2]:
+            if bonds[i][j] == x:
+                coord1 = bonds[i][j + 1]
+            if bonds[i][j] == y:
+                coord2 = bonds[i][j + 1]
+            if bonds[i][j] == z:
+                coord3 = bonds[i][j + 1]
+
+    v1 = np.array(coord2) - np.array(coord1)
+    v2 = np.array(coord2) - np.array(coord3)
+
+    v1_mag, v2_mag, v = 0, 0, 0
+    for a in range(3):
+        v1_mag += v1[a] ** 2
+        v2_mag += v2[a] ** 2
+        v += v1[a] * v2[a]
+    v1_mag = np.sqrt(v1_mag)
+    v2_mag = np.sqrt(v2_mag)
+
+    theta = (180 / np.pi) * np.arccos(v / (v1_mag * v2_mag))
+    print("\nThe %s-%s-%s angle is : %0.3f˚" % (x, y, z, theta))
+    return theta
